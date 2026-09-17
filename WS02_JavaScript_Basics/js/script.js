@@ -37,3 +37,9 @@ function greetUser(name) {
 greetUser("Ivona");
 greetUser('Lidia');
 greetUser('Ekaterina');
+
+const button = document.getElementById("myButton");
+
+button.addEventListener("click", function () {
+  alert("JavaScript toimii!");
+});
