@@ -15,7 +15,12 @@ console.log(visitorName);
 console.log("Hei " + visitorName + "! Tervetuloa JavaScriptin pariin!");
 
 const visitorFavoriteAnimal = prompt("Mikä on lempieläimesi?");
-console.log("Hello, " + visitorName + "! Your favorite animal is " + visitorFavoriteAnimal + ".");
+console.log("Moi, " + visitorName + "! Sinun lempieläimesi on " + visitorFavoriteAnimal + ".");
+if (visitorFavoriteAnimal === favoriteAnimal) {
+  console.log("Mahtava maku! Tämä on minunkin lempieläin!");
+} else {
+  console.log("Mahtavaa! Sinun lempieläimesi on " + visitorFavoriteAnimal + ".");
+}
 
 const visitorAge = prompt("Kuinka vanha olet?");
 
