@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Workshop 3</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table.display { border-collapse: collapse; margin-top: 10px; }
+        table.display th, table.display td { border: 1px solid #999; padding: 6px 12px; }
+        table.display th { background: #eee; }
+        textarea { width: 100%; max-width: 500px; }
+        #preview { border: 1px solid #ccc; padding: 8px; min-height: 40px; background: #fafafa; }
+        #keybox { padding: 20px; border: 1px solid #ccc; font-size: 1.2em; }
+    </style>
+</head>
+
+<body class="ws3">
+    <h1>Workshop 3: JavaScript Events</h1>
+    <hr>
+    <p>
+        In this workshop, you will practise using JavaScript events.
+        Use the course materials for help and save your code for later use.
+    </p>
+    <hr>
+
+    <!-- Exercise 1 -->
+    <h2>Exercise 1: Basic Click Events</h2>
+    <p>Below you can see two buttons. Add <code>onclick</code> events to them.</p>
+    <p>In Exercise 2, you will learn <code>addEventListener()</code>, which is the preferred way to keep JavaScript behaviour separate from HTML.</p>
+
+    <p>
+        <button id="btnAlert">Click me</button>
+        <button id="btnTable">Show Animal table</button>
+    </p>
+
+    <div id="tableContainer"></div>
+
+    <ol>
+        <li>The first button should open an alert window saying: "You clicked me!".</li>
+        <li>The second button should call a function named <code>showTable()</code>.</li>
+        <li>Build the table using a template string.</li>
+        <li>Use variables for the column content.</li>
+        <li>Find its destination with <code>document.querySelector()</code>.</li>
+    </ol>
+
+    <table id="example" class="display">
+        <thead>
+            <tr><th>Animal</th><th>Habitat</th><th>Diet</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Tiger</td><td>Forest</td><td>Carnivore</td></tr>
+            <tr><td>Elephant</td><td>Savanna</td><td>Herbivore</td></tr>
+        </tbody>
+    </table>
+
+    <hr>
+
+    <h2>Exercise 2: Event Listeners and DOM Manipulation</h2>
+    <ul>
+        <li>Add a <code>mouseover</code> event to the "Exercise 2" heading. Print <em>"Stepped over me with a mouse!"</em> to the console.</li>
+        <li>Dynamically add a <code>click</code> event to the "Exercise 1" heading using <code>addEventListener()</code>. Change the heading colour to red and its text to "Bye bye mouse!".</li>
+    </ul>
+    <p>Tip: use <code>document.querySelector()</code> and change the content with <code>innerHTML</code>.</p>
+
+    <hr>
+
+    <h2>Exercise 3: Input Events</h2>
+    <p>Use the feedback form below to practise reacting to user input.</p>
+
+    <ul>
+        <li>Add a <strong>focus</strong> event to the <code>textarea</code>.</li>
+        <li>Add a <strong>blur</strong> event that clears the message and restores the styles.</li>
+        <li>Add an <strong>input</strong> listener that updates the character count and the preview.</li>
+    </ul>
+
+    <h3>Quick Feedback Form</h3>
+
+    <form id="feedbackForm" novalidate>
+        <label for="feedback">Feedback:</label><br>
+        <textarea id="feedback" placeholder="Write your feedback..." rows="5"></textarea><br>
+
+        <div style="margin: 4px 0;">
+            <span id="charcount">0/200</span>
+            <span id="status" aria-live="polite" style="margin-left: 8px; color: #666;"></span>
+        </div>
+
+        <button id="sendBtn" type="submit">Send</button>
+    </form>
+
+    <h3>Preview</h3>
+    <div id="preview">(The preview will appear here)</div>
+
+    <hr>
+
+    <h2>Exercise 4: Form Submission</h2>
+    <p>Continue using the same feedback form. Now practise handling form submission.</p>
+
+    <hr>
+
+    <h2>Exercise 5: Keyboard Events</h2>
+
+    <h3>Detecting Key Presses</h3>
+    <p>Create a program that shows the last key pressed and its key code.</p>
+
+    <div id="keybox">Press any key...</div>
+    <p id="keyinfo"></p>
+
+    <ul>
+        <li>Add a <code>keydown</code> listener to the document.</li>
+        <li>Show the pressed key (<code>event.key</code>) and the key code (<code>event.code</code>).</li>
+        <li>Change the content of <code>#keybox</code> to show the pressed key in a large font.</li>
+    </ul>
+
+    <h4>Bonus Task</h4>
+    <ul>
+        <li>Change the background colour based on the key pressed.</li>
+        <li>Add a counter that shows the number of key presses.</li>
+        <li>Show whether Shift, Ctrl, or Alt is pressed.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Bonus Exercise: Google Maps and Geolocation</h2>
+    <h3>Finding the User's Location (Geolocation API)</h3>
+    <p>You can find the user's location with JavaScript's <strong>Geolocation API</strong>.</p>
+
+    <button id="geoBtn">Find my location</button>
+
+    <p><em>Note: location access usually works only on HTTPS pages.</em></p>
+
+    <script>
+        const clickMeBtn = document.getElementById('btnAlert');
+        const showTableBtn = document.getElementById('btnTable');
+
+        clickMeBtn.onclick = function () {
+            alert('You clicked me!');
+        };
+
+        function showTable() {
+            const animals = [
+                { animal: 'Tiger', habitat: 'Forest', diet: 'Carnivore' },
+                { animal: 'Elephant', habitat: 'Savanna', diet: 'Herbivore' },
+                { animal: 'Panda', habitat: 'Bamboo Forest', diet: 'Herbivore' },
+                { animal: 'Lion', habitat: 'Savanna', diet: 'Carnivore' }
+            ];
+
+            let rows = '';
+            for (const item of animals) {
+                const { animal, habitat, diet } = item;
+                rows += `
+                    <tr>
+                        <td>${animal}</td>
+                        <td>${habitat}</td>
+                        <td>${diet}</td>
+                    </tr>
+                `;
+            }
+
+            const tableHTML = `
+                <table id="animalTable" class="display">
+                    <thead>
+                        <tr><th>Animal</th><th>Habitat</th><th>Diet</th></tr>
+                    </thead>
+                    <tbody>
+                        ${rows}
+                    </tbody>
+                </table>
+            `;
+
+            const destination = document.querySelector('#tableContainer');
+            destination.innerHTML = tableHTML;
+        }
+
+        showTableBtn.onclick = showTable;
+
+        const h2Elements = document.querySelectorAll('h2');
+        const exercise1Heading = h2Elements[0];
+        const exercise2Heading = h2Elements[1];
+
+        exercise2Heading.addEventListener('mouseover', function () {
+            console.log('Stepped over me with a mouse!');
+        });
+
+        exercise1Heading.addEventListener('click', function () {
+            this.style.color = 'red';
+            this.innerHTML = 'Bye bye mouse!';
+        });
+
+        const feedback = document.getElementById('feedback');
+        const status = document.getElementById('status');
+        const charcount = document.getElementById('charcount');
+        const preview = document.getElementById('preview');
+
+        feedback.addEventListener('focus', function () {
+            status.textContent = 'You are typing...';
+            this.style.backgroundColor = '#e6f7ff';
+        });
+
+        feedback.addEventListener('blur', function () {
+            status.textContent = '';
+            this.style.backgroundColor = '';
+        });
+
+        feedback.addEventListener('input', function () {
+            const length = this.value.length;
+            charcount.textContent = `${length}/200`;
+            preview.textContent = this.value || '(The preview will appear here)';
+        });
+
+        const feedbackForm = document.getElementById('feedbackForm');
+
+        feedbackForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const text = feedback.value.trim();
+
+            if (text.length < 10 || text.length > 200) {
+                status.textContent = 'Error: feedback must be 10–200 characters long.';
+                status.style.color = 'red';
+            } else {
+                feedback.value = '';
+                charcount.textContent = '0/200';
+                preview.textContent = '(The preview will appear here)';
+                status.textContent = 'Thank you for your feedback!';
+                status.style.color = 'green';
+            }
+        });
+
+
+        const keybox = document.getElementById('keybox');
+        const keyinfo = document.getElementById('keyinfo');
+        let keyPressCount = 0;
+
+        document.addEventListener('keydown', function (event) {
+            console.log(event);
+
+            keyinfo.textContent = `Key: ${event.key} | Code: ${event.code}`;
+
+            keybox.innerHTML = `<span style="font-size: 3em;">${event.key}</span>`;
+
+            if (event.key === 'r' || event.key === 'R') {
+                keybox.style.backgroundColor = '#ffcccc';
+            } else if (event.key === 'g' || event.key === 'G') {
+                keybox.style.backgroundColor = '#ccffcc';
+            } else if (event.key === 'b' || event.key === 'B') {
+                keybox.style.backgroundColor = '#ccccff';
+            } else {
+                keybox.style.backgroundColor = '';
+            }
+
+            keyPressCount++;
+            keyinfo.textContent += ` | Presses: ${keyPressCount}`;
+
+            const modifiers = [];
+            if (event.shiftKey) modifiers.push('Shift');
+            if (event.ctrlKey) modifiers.push('Ctrl');
+            if (event.altKey) modifiers.push('Alt');
+            if (modifiers.length > 0) {
+                keyinfo.textContent += ` | Modifiers: ${modifiers.join(' + ')}`;
+            }
+        });
+
+        document.getElementById('geoBtn').addEventListener('click', function () {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    const url = `https://www.google.com/maps?q=${lat},${lon}`;
+                    window.location.href = url;
+                },
+                (error) => {
+                    alert('Could not get the location: ' + error.message);
+                }
+            );
+        });
+    </script>
+</body>
+</html>
